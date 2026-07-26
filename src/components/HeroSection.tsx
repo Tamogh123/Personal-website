@@ -1,19 +1,42 @@
 
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef,useState,type CSSProperties } from "react";
 import { gsap } from "gsap";
-import dynamic from "next/dynamic";
+import Image from "next/image";
+type Bullet = {
+  id: number;
+  x: number;
+  y: number;
+  travelX: number;
+  duration: number;
+  size: number;
+};
 
-const GundamInnerFrameCanvas = dynamic(() => import("./GundamInnerFrameCanvas"), {
-  ssr: false,
-});
-
+type Spark = {
+  id: number;
+  x: number;
+  y: number;
+  size: number;
+  duration: number;
+};
 export default function HeroSection() {
   const sectionRef = useRef<HTMLElement>(null);
   const headingRef = useRef<HTMLHeadingElement>(null);
   const subtitleRef = useRef<HTMLDivElement>(null);
   const ctaRef = useRef<HTMLDivElement>(null);
+  const robotRef = useRef<HTMLDivElement>(null);
+  const jets = [
+  { top: "14%", animation: "jet-curve-1", delay: 0, duration: 10.2, scale: 1.0, start: "-30vw", explodeAt: 0.58 },
+  { top: "30%", animation: "jet-curve-2", delay: 1.1, duration: 11, scale: 0.9, start: "-32vw", explodeAt: 0.46 },
+  { top: "52%", animation: "jet-curve-1", delay: 2.0, duration: 9.6, scale: 0.96, start: "-29vw", explodeAt: 0.66 },
+  { top: "70%", animation: "jet-curve-2", delay: 3.0, duration: 10.5, scale: 0.86, start: "-34vw", explodeAt: 0.5 },
+  ];
+  const [bullets, setBullets] = useState<Bullet[]>([]);
+  const [sparks, setSparks] = useState<Spark[]>([]);
+
+  const bulletIdRef = useRef(0);
+  const sparkIdRef = useRef(0);
 
   const scramble = (el: HTMLElement, finalText: string, duration = 800) => {
     const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789@#$%^&*";
@@ -35,7 +58,74 @@ export default function HeroSection() {
       }
     }, duration / steps);
   };
+useEffect(() => {
+  const spawnBurst = () => {
+    const section = sectionRef.current;
+    const robot = robotRef.current;
+    if (!section || !robot) return;
 
+    const sectionRect = section.getBoundingClientRect();
+    const robotRect = robot.getBoundingClientRect();
+
+    const chosenJet = jets[Math.floor(Math.random() * jets.length)];
+    const laneY = sectionRect.height * (parseFloat(chosenJet.top) / 100);
+
+    const impactX =
+      robotRect.left - sectionRect.left + robotRect.width * (0.34 + Math.random() * 0.34);
+    const impactY =
+      robotRect.top - sectionRect.top + robotRect.height * (0.18 + Math.random() * 0.56);
+
+    const startX = -160 - Math.random() * 180;
+    const travelX = impactX - startX;
+
+    const count = 2 + Math.floor(Math.random() * 4);
+
+    for (let i = 0; i < count; i++) {
+      const id = bulletIdRef.current++;
+      const duration = 2120 + Math.random() * 550;
+      const y = laneY + (Math.random() * 18 - 9);
+
+      setBullets((prev) => [
+        ...prev,
+        {
+          id,
+          x: startX,
+          y,
+          travelX,
+          duration,
+          size: 2 + Math.random() * 1.4,
+        },
+      ]);
+
+      window.setTimeout(() => {
+        setBullets((prev) => prev.filter((b) => b.id !== id));
+
+        const sparkId = sparkIdRef.current++;
+        const sparkDuration = 320 + Math.random() * 160;
+
+        setSparks((prev) => [
+          ...prev,
+          {
+            id: sparkId,
+            x: impactX,
+            y: impactY,
+          size: 38 + Math.random() * 12,
+            duration: sparkDuration,
+          },
+        ]);
+
+        window.setTimeout(() => {
+          setSparks((prev) => prev.filter((s) => s.id !== sparkId));
+        }, sparkDuration + 50);
+      }, duration);
+    }
+  };
+
+  spawnBurst();
+  const timer = window.setInterval(spawnBurst, 1400);
+
+  return () => window.clearInterval(timer);
+}, []);
   useEffect(() => {
     const tl = gsap.timeline({ delay: 1 });
 
@@ -71,184 +161,149 @@ export default function HeroSection() {
     }
   }, []);
 
-  const jets = [
-    { top: "14%", animation: "jet-curve-1", delay: 0, duration: 10.2, scale: 1.0, start: "-30vw", explodeAt: 0.58 },
-    { top: "30%", animation: "jet-curve-2", delay: 1.1, duration: 11, scale: 0.9, start: "-32vw", explodeAt: 0.46 },
-    { top: "52%", animation: "jet-curve-1", delay: 2.0, duration: 9.6, scale: 0.96, start: "-29vw", explodeAt: 0.66 },
-    { top: "70%", animation: "jet-curve-2", delay: 3.0, duration: 10.5, scale: 0.86, start: "-34vw", explodeAt: 0.5 },
-  ];
-
   return (
     <section
       ref={sectionRef}
       className="relative min-h-screen flex items-center overflow-hidden"
       style={{ background: "#f5f6f8" }}
     >
-      <div className="absolute top-0 right-0 h-full" style={{ width: "55%", zIndex: 0 }}>
-        {jets.map((jet, i) => (
-          <div
-            key={i}
-            className="absolute pointer-events-none"
-            style={{
-              ["--jet-duration" as string]: `${jet.duration}s`,
-              ["--jet-delay" as string]: `${jet.delay}s`,
-              ["--explode-offset" as string]: `${jet.duration * jet.explodeAt}s`,
-              top: jet.top,
-              left: jet.start,
-              zIndex: 2,
-              animation: `${jet.animation} ${jet.duration}s linear infinite`,
-              animationDelay: `${jet.delay}s`,
-              opacity: 0.92,
-              transform: `scale(${jet.scale})`,
-            }}
-          >
-            <div
-              className="jet-inner"
+<div className="absolute inset-0 pointer-events-none z-20 overflow-hidden" aria-hidden="true">
+  {bullets.map((b) => (
+    <div
+      key={b.id}
+      className="bullet-tracer"
+      style={
+        {
+          left: `${b.x}px`,
+          top: `${b.y}px`,
+          width: `${b.size * 14}px`,
+          ["--travel-x" as any]: `${b.travelX}px`,
+          ["--dur" as any]: `${b.duration}ms`,
+        } as CSSProperties & Record<string, string>
+      }
+    />
+  ))}
+
+  {sparks.map((s) => (
+    <div
+      key={s.id}
+      className="bullet-spark"
+      style={
+        {
+          left: `${s.x}px`,
+          top: `${s.y}px`,
+          width: `${s.size}px`,
+          height: `${s.size}px`,
+          ["--spark-dur" as any]: `${s.duration}ms`,
+        } as CSSProperties & Record<string, string>
+      }
+    />
+  ))}
+</div>  
+      {/* Pseudo-3D Gundam image */}
+      <div
+        className="absolute inset-0"
+        style={{ perspective: "900px", perspectiveOrigin: "70% 50%", display: "flex", alignItems: "center", justifyContent: "flex-end", paddingRight: "120px" }}
+        onMouseMove={(e) => {
+          const rect = e.currentTarget.getBoundingClientRect();
+          const nx = ((e.clientX - rect.left) / rect.width - 0.5) * 2;
+          const ny = ((e.clientY - rect.top) / rect.height - 0.5) * 2;
+          const el = e.currentTarget.querySelector<HTMLElement>(".gundam-3d-wrap");
+          if (el) {
+            el.style.transform = `rotateY(${nx * 14}deg) rotateX(${-ny * 8}deg) scale(1.04)`;
+          }
+        }}
+        onMouseLeave={(e) => {
+          const el = e.currentTarget.querySelector<HTMLElement>(".gundam-3d-wrap");
+          if (el) el.style.transform = "rotateY(-6deg) rotateX(2deg) scale(1)";
+        }}
+      >
+        <div
+          ref={robotRef}
+          className="gundam-3d-wrap"
+          style={{
+            position: "relative",
+            width: 560,
+            height: 700,
+            transformStyle: "preserve-3d",
+            transform: "rotateY(-6deg) rotateX(2deg) scale(1)",
+            transition: "transform 0.12s ease-out",
+            filter: "drop-shadow(-18px 24px 48px rgba(10,28,72,0.32)) drop-shadow(0 4px 18px rgba(15,85,222,0.14))",
+          }}
+        >
+          {/* Full base image */}
+          <div style={{ position: "relative", width: "100%", height: "100%" }}>
+            <Image
+              src="/base-image-cut.png"
+              alt="Gundam mech"
+              width={560}
+              height={700}
+              priority
               style={{
-                position: "relative",
-                width: 128,
-                height: 44,
-                filter: "drop-shadow(0 0 8px rgba(15,85,222,0.16))",
+                width: "100%",
+                height: "100%",
+                objectFit: "contain",
+              }}
+            />
+
+            {/* Right arm - animated overlay */}
+            <div
+              style={{
+                position: "absolute",
+                top: "140px",
+                left: "0px",
+                width: "213px",
+                height: "355px",
+                animation: "arm-right-swing 3.5s ease-in-out infinite",
+                transformStyle: "preserve-3d",
+                transformOrigin: "right center",
+                zIndex: 10,
               }}
             >
-              <div className="jet-body">
-                <div
-                  style={{
-                    position: "absolute",
-                    left: 6,
-                    top: 5,
-                    width: 28,
-                    height: 24,
-                    clipPath: "polygon(0 0, 100% 100%, 0 100%)",
-                    background: "#cdd7e6",
-                    border: "1px solid rgba(28,49,86,0.26)",
-                  }}
-                />
-
-                <div
-                  style={{
-                    position: "absolute",
-                    left: 16,
-                    top: 13,
-                    width: 56,
-                    height: 16,
-                    borderRadius: 999,
-                    background: "linear-gradient(180deg, #f6f8fc, #d5deec)",
-                    border: "1px solid rgba(28,49,86,0.24)",
-                  }}
-                />
-
-                <div
-                  style={{
-                    position: "absolute",
-                    left: 42,
-                    top: 8,
-                    width: 24,
-                    height: 18,
-                    clipPath: "polygon(0 0, 100% 32%, 84% 100%, 14% 100%, 0 30%)",
-                    background: "#0f55de",
-                    border: "1px solid rgba(15,85,222,0.26)",
-                  }}
-                />
-
-                {[0, 1, 2].map((bulletIndex) => (
-                  <div
-                    key={`jet-bullet-${bulletIndex}`}
-                    style={{
-                      position: "absolute",
-                      left: 84 + bulletIndex * 9,
-                      top: 17 + bulletIndex,
-                      width: 11,
-                      height: 3,
-                      borderRadius: 1,
-                      background: bulletIndex === 0 ? "#0f55de" : "#6ea2ff",
-                      boxShadow: "0 0 9px rgba(15,85,222,0.34)",
-                      animation: `bullet-trace ${1.2 + bulletIndex * 0.08}s linear infinite`,
-                      animationDelay: `${i * 0.18 + bulletIndex * 0.08}s`,
-                    }}
-                  />
-                ))}
-
-              </div>
-
-              <div className="jet-explosion-wrap">
-                <div className="jet-explosion-core" />
-                <div className="jet-explosion-ring" />
-                <div className="jet-explosion-ring jet-explosion-ring-2" />
-                <div className="jet-explosion-smoke" />
-                {Array.from({ length: 8 }).map((_, d) => (
-                  <div key={d} className="jet-shard" style={{ ["--shard-angle" as string]: `${d * 45}deg` }} />
-                ))}
-                {Array.from({ length: 10 }).map((_, s) => (
-                  <div key={`spark-${s}`} className="jet-sparkle" style={{ ["--spark-angle" as string]: `${s * 36}deg` }} />
-                ))}
-              </div>
-            </div>
-          </div>
-        ))}
-
-        {jets.map((jet, i) => (
-          <div
-            key={`robot-shot-${i}`}
-            className="absolute pointer-events-none"
-            style={{
-              ["--jet-duration" as string]: `${jet.duration}s`,
-              ["--jet-delay" as string]: `${jet.delay}s`,
-              ["--explode-offset" as string]: `${jet.duration * jet.explodeAt}s`,
-              ["--hit-distance" as string]: `${24 + i * 1.6}vw`,
-              top: `calc(${jet.top} + ${34 + (i % 2) * 8}px)`,
-              left: "36%",
-              width: 320,
-              height: 40,
-              zIndex: 3,
-            }}
-          >
-            {[0, 1].map((shot) => (
-              <div
-                key={shot}
-                className="robot-shot"
+              <Image
+                src="/mech-right.png"
+                alt="Right arm"
+                width={213}
+                height={355}
                 style={{
-                  ["--arc-height" as string]: shot === 0 ? "-62px" : "-78px",
-                  ["--arc-return" as string]: shot === 0 ? "-26px" : "-18px",
-                  ["--turn-rot" as string]: shot === 0 ? "-42deg" : "-34deg",
-                  top: shot === 0 ? 14 : 18,
-                  background: shot === 0 ? "#ff3f2a" : "#ffd44d",
-                  boxShadow:
-                    shot === 0
-                      ? "0 0 12px rgba(255,63,42,0.72)"
-                      : "0 0 12px rgba(255,212,77,0.78)",
-                  animationDelay: `calc(var(--jet-delay, 0s) + var(--explode-offset, 5s) - ${0.72 + shot * 0.12}s)`,
+                  width: "100%",
+                  height: "100%",
+                  objectFit: "contain",
                 }}
               />
-            ))}
-          </div>
-        ))}
+            </div>
 
-        <GundamInnerFrameCanvas />
-        <div
-          className="absolute inset-0 pointer-events-none"
-          style={{
-            background: "linear-gradient(to right, #f5f6f8 0%, rgba(245,246,248,0.9) 36%, transparent 75%)",
-          }}
-        />
+            {/* Left arm - animated overlay */}
+            <div
+              style={{
+                position: "absolute",
+                top: "140px",
+                right: "0px",
+                width: "214px",
+                height: "355px",
+                animation: "arm-left-swing 3.5s ease-in-out infinite",
+                animationDelay: "0.3s",
+                transformStyle: "preserve-3d",
+                transformOrigin: "left center",
+                zIndex: 10,
+              }}
+            >
+              <Image
+                src="/mech-left.png"
+                alt="Left arm"
+                width={214}
+                height={355}
+                style={{
+                  width: "100%",
+                  height: "100%",
+                  objectFit: "contain",
+                }}
+              />
+            </div>
+          </div>
+        </div>
       </div>
 
-      <div
-        className="absolute inset-0 pointer-events-none"
-        style={{
-          background:
-            "repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,0,0,0.015) 2px, rgba(0,0,0,0.015) 4px)",
-          zIndex: 1,
-        }}
-      />
-
-      <div
-        className="absolute bottom-0 left-0 right-0 h-40 pointer-events-none"
-        style={{
-          background: "linear-gradient(to bottom, transparent, rgba(245,246,248,0.95))",
-          zIndex: 1,
-        }}
-      />
 
       <div className="relative z-10 w-full py-32" style={{ maxWidth: "1100px", margin: "0 auto", padding: "8rem 3rem" }}>
         <div className="max-w-xl">
@@ -365,6 +420,63 @@ export default function HeroSection() {
           <div ref={ctaRef} />
         </div>
       </div>
+<style jsx global>{`
+  .bullet-tracer {
+    position: absolute;
+    height: 2px;
+    transform-origin: left center;
+    background: linear-gradient(
+      90deg,
+      rgba(255, 255, 255, 1),
+      rgba(0, 145, 248, 0.95),
+      rgba(249, 25, 0, 0)
+    );
+    box-shadow: 0 0 10px rgba(127, 220, 255, 0.95), 0 0 24px rgba(127, 220, 255, 0.35);
+    animation: bullet-fly var(--dur) linear forwards;
+    will-change: transform, opacity;
+  }
+
+  @keyframes bullet-fly {
+    0% {
+      transform: translateX(0) scaleX(1);
+      opacity: 1;
+    }
+    80% {
+      opacity: 1;
+    }
+    100% {
+      transform: translateX(var(--travel-x)) scaleX(1);
+      opacity: 0;
+    }
+  }
+
+  .bullet-spark {
+    position: absolute;
+    border-radius: 50%;
+    background: radial-gradient(
+      circle,
+      rgba(255, 255, 255, 1) 0%,
+      rgba(248, 178, 28, 0.95) 35%,
+      rgba(255, 140, 0, 0.2) 70%,
+      rgba(255, 140, 0, 0) 100%
+    );
+    box-shadow: 0 0 10px rgba(255, 180, 80, 0.95), 0 0 22px rgba(255, 120, 40, 0.5);
+    transform: translate(-50%, -50%);
+    animation: spark-pop var(--spark-dur) ease-out forwards;
+    will-change: transform, opacity;
+  }
+
+  @keyframes spark-pop {
+    0% {
+      transform: translate(-50%, -50%) scale(0.2);
+      opacity: 1;
+    }
+    100% {
+      transform: translate(-50%, -50%) scale(2.2);
+      opacity: 0;
+    }
+  }
+`}</style>      
     </section>
   );
 }
