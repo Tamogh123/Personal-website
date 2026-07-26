@@ -2,10 +2,6 @@
 
 import { useEffect, useRef, useState } from "react";
 import { gsap } from "gsap";
-import Link from "next/link";
-import dynamic from "next/dynamic";
-
-const NavBlobLogo = dynamic(() => import("./NavBlobLogo"), { ssr: false });
 
 const navLinks = [
   { href: "#about", label: "About" },
@@ -43,84 +39,73 @@ export default function Navbar() {
   };
 
   return (
-    <nav
-      ref={navRef}
-      className="fixed top-0 left-0 right-0 z-50 px-4 py-4 transition-all duration-500"
-      style={{
-        background: scrolled ? "rgba(2, 4, 8, 0.85)" : "transparent",
-        backdropFilter: scrolled ? "blur(20px)" : "none",
-        borderBottom: scrolled
-          ? "1px solid rgba(0, 212, 255, 0.1)"
-          : "1px solid transparent",
-      }}
-    >
+    <nav ref={navRef} className="fixed top-0 left-0 right-0 z-50 px-4 py-4 transition-all duration-500">
+      <div
+        className="max-w-7xl mx-auto"
+        style={{
+          padding: "0.25rem 1rem",
+          background: scrolled ? "#ffffff" : "transparent",
+          border: scrolled ? "1px solid rgba(15,32,58,0.14)" : "1px solid transparent",
+          boxShadow: scrolled ? "0 10px 28px rgba(20,34,52,0.12)" : "none",
+          backdropFilter: scrolled ? "blur(8px)" : "none",
+        }}
+      >
       <div className="flex items-center justify-between w-full" style={{ paddingLeft: "1rem", paddingRight: "1rem" }}>
-        {/* Terminal logo */}
-        <div className="flex items-center gap-3" style={{ cursor: "pointer" }}>
-          <NavBlobLogo size={40} />
-          {/* Mini terminal card */}
+        {/* Gundam command badge */}
+          <div className="flex items-center gap-3" style={{ cursor: "pointer" }}>
           <div
             style={{
-              background: "rgba(5, 10, 18, 0.92)",
-              border: "1px solid rgba(0, 212, 255, 0.18)",
-              borderRadius: "8px",
-              padding: "5px 12px 5px 10px",
               display: "flex",
               alignItems: "center",
-              gap: "0",
-              boxShadow: "0 0 12px rgba(0,212,255,0.08)",
+              gap: 10,
+              border: "1px solid rgba(16, 42, 80, 0.22)",
+              background: "linear-gradient(180deg, #ffffff, #f2f7ff)",
+              padding: "0.5rem 0.7rem",
+              boxShadow: "0 6px 18px rgba(22, 44, 78, 0.12)",
             }}
           >
-            {/* Traffic-light dots */}
-            <div style={{ display: "flex", gap: "5px", marginRight: "10px" }}>
-              <span style={{ width: 8, height: 8, borderRadius: "50%", background: "#ff5f56", display: "block" }} />
-              <span style={{ width: 8, height: 8, borderRadius: "50%", background: "#ffbd2e", display: "block" }} />
-              <span style={{ width: 8, height: 8, borderRadius: "50%", background: "#27c93f", display: "block" }} />
+            <span
+              style={{
+                width: 10,
+                height: 10,
+                display: "inline-block",
+                borderRadius: 2,
+                background: "#0f55de",
+                boxShadow: "0 0 10px rgba(15, 85, 222, 0.35)",
+              }}
+            />
+            <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
+              <span
+                style={{
+                  width: 11,
+                  height: 11,
+                  borderRadius: "50%",
+                  border: "2px solid #1c3f75",
+                  boxShadow: "inset 0 0 0 2px #ffffff",
+                  display: "inline-block",
+                }}
+              />
+              <span
+                style={{
+                  width: 8,
+                  height: 8,
+                  borderRadius: 2,
+                  background: "#1c4db3",
+                  display: "inline-block",
+                }}
+              />
+              <span style={{ width: 12, height: 2, background: "#2a4f87", display: "inline-block" }} />
             </div>
-            {/* Prompt */}
             <span
               style={{
-                fontFamily: "var(--font-geist-mono)",
-                fontSize: "13px",
-                color: "rgba(100,160,200,0.55)",
-                marginRight: "6px",
+                fontFamily: "var(--font-mono)",
+                fontSize: 10,
+                letterSpacing: "0.08em",
+                color: "#315078",
+                textTransform: "uppercase",
               }}
             >
-              ~/
-            </span>
-            <span
-              style={{
-                fontFamily: "var(--font-geist-mono)",
-                fontSize: "13px",
-                color: "var(--accent-blue)",
-                marginRight: "5px",
-                fontWeight: 600,
-              }}
-            >
-            </span>
-            <span
-              style={{
-                fontFamily: "var(--font-geist-mono)",
-                fontSize: "13px",
-                fontWeight: 700,
-                background: "linear-gradient(90deg, var(--accent-blue), var(--accent-purple))",
-                WebkitBackgroundClip: "text",
-                WebkitTextFillColor: "transparent",
-              }}
-            >
-              tamogh
-            </span>
-            {/* Blinking cursor */}
-            <span
-              className="cursor-blink"
-              style={{
-                fontFamily: "var(--font-geist-mono)",
-                fontSize: "13px",
-                color: "var(--accent-green)",
-                marginLeft: "2px",
-              }}
-            >
-              ▌
+              VU3TKI
             </span>
           </div>
         </div>
@@ -135,7 +120,7 @@ export default function Navbar() {
                 className="text-sm font-medium tracking-wider uppercase transition-colors duration-300"
                 style={{
                   color: "var(--text-secondary)",
-                  fontFamily: "var(--font-geist-mono)",
+                  fontFamily: "var(--font-mono)",
                 }}
                 onMouseEnter={(e) =>
                   ((e.target as HTMLElement).style.color = "var(--accent-blue)")
@@ -144,79 +129,46 @@ export default function Navbar() {
                   ((e.target as HTMLElement).style.color = "var(--text-secondary)")
                 }
               >
-                <span style={{ color: "var(--accent-purple)" }}>{"0" + (i + 1) + ". "}</span>
+                <span style={{ color: "var(--accent-blue)" }}>{"0" + (i + 1) + ". "}</span>
                 {link.label}
               </a>
             </li>
           ))}
           <li>
             <a
-              href="/Tamogh_Resume.pdf"
+              href="/Tamogh_Nekkanti_Resume.pdf"
               target="_blank"
               rel="noreferrer"
               style={{ textDecoration: "none" }}
               onMouseEnter={(e) => {
-                const card = e.currentTarget.querySelector(".resume-terminal") as HTMLElement;
+                const card = e.currentTarget.querySelector(".resume-command") as HTMLElement;
                 if (card) {
-                  card.style.borderColor = "rgba(0,212,255,0.45)";
-                  card.style.boxShadow = "0 0 16px rgba(0,212,255,0.18)";
+                  card.style.borderColor = "rgba(20,80,201,0.4)";
+                  card.style.boxShadow = "0 0 16px rgba(20,80,201,0.18)";
                 }
               }}
               onMouseLeave={(e) => {
-                const card = e.currentTarget.querySelector(".resume-terminal") as HTMLElement;
+                const card = e.currentTarget.querySelector(".resume-command") as HTMLElement;
                 if (card) {
-                  card.style.borderColor = "rgba(0,212,255,0.18)";
-                  card.style.boxShadow = "0 0 12px rgba(0,212,255,0.08)";
+                  card.style.borderColor = "rgba(20,80,201,0.2)";
+                  card.style.boxShadow = "0 0 10px rgba(20,80,201,0.1)";
                 }
               }}
             >
-              {/* Mini terminal card — resume */}
               <div
-                className="resume-terminal"
+                className="resume-command"
                 style={{
-                  background: "rgba(5, 10, 18, 0.92)",
-                  border: "1px solid rgba(0, 212, 255, 0.18)",
-                  borderRadius: "8px",
-                  padding: "5px 12px 5px 10px",
                   display: "flex",
                   alignItems: "center",
-                  boxShadow: "0 0 12px rgba(0,212,255,0.08)",
-                  transition: "border-color 0.25s, box-shadow 0.25s",
-                  cursor: "pointer",
+                  gap: 8,
+                  border: "1px solid rgba(20,80,201,0.2)",
+                  background: "linear-gradient(180deg, #ffffff, #f3f7ff)",
+                  boxShadow: "0 0 10px rgba(20,80,201,0.1)",
                 }}
               >
-                {/* Traffic-light dots */}
-                <div style={{ display: "flex", gap: "5px", marginRight: "10px" }}>
-                  <span style={{ width: 8, height: 8, borderRadius: "50%", background: "#ff5f56", display: "block" }} />
-                  <span style={{ width: 8, height: 8, borderRadius: "50%", background: "#ffbd2e", display: "block" }} />
-                  <span style={{ width: 8, height: 8, borderRadius: "50%", background: "#27c93f", display: "block" }} />
-                </div>
-                {/* Prompt */}
-                <span style={{ fontFamily: "var(--font-geist-mono)", fontSize: "13px", color: "rgba(100,160,200,0.55)", marginRight: "6px" }}>
-                  ~/
-                </span>
-                <span style={{ fontFamily: "var(--font-geist-mono)", fontSize: "13px", color: "var(--accent-blue)", marginRight: "5px", fontWeight: 600 }}>
-                  open
-                </span>
-                <span
-                  style={{
-                    fontFamily: "var(--font-geist-mono)",
-                    fontSize: "13px",
-                    fontWeight: 700,
-                    background: "linear-gradient(90deg, var(--accent-blue), var(--accent-purple))",
-                    WebkitBackgroundClip: "text",
-                    WebkitTextFillColor: "transparent",
-                  }}
-                >
-                  resume.pdf
-                </span>
-                {/* Blinking cursor */}
-                <span
-                  className="cursor-blink"
-                  style={{ fontFamily: "var(--font-geist-mono)", fontSize: "13px", color: "var(--accent-green)", marginLeft: "2px" }}
-                >
-                  ▌
-                </span>
+                <span style={{ fontFamily: "var(--font-mono)", fontSize: 12, color: "#34527a" }}>CMD</span>
+                <span style={{ fontFamily: "var(--font-mono)", fontSize: 12, color: "#1450c9", fontWeight: 700 }}>DEPLOY</span>
+                <span style={{ fontFamily: "var(--font-mono)", fontSize: 12, fontWeight: 700, color: "#2d3f59" }}>RESUME.PDF</span>
               </div>
             </a>
           </li>
@@ -247,6 +199,7 @@ export default function Navbar() {
           ))}
         </button>
       </div>
+      </div>
 
       {/* Mobile menu */}
       <div
@@ -262,10 +215,10 @@ export default function Navbar() {
                 className="text-sm font-medium tracking-wider uppercase"
                 style={{
                   color: "var(--text-secondary)",
-                  fontFamily: "var(--font-geist-mono)",
+                  fontFamily: "var(--font-mono)",
                 }}
               >
-                <span style={{ color: "var(--accent-purple)" }}>{"0" + (i + 1) + ". "}</span>
+                <span style={{ color: "var(--accent-blue)" }}>{"0" + (i + 1) + ". "}</span>
                 {link.label}
               </a>
             </li>

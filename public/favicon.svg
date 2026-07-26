@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none">
+  <defs>
+    <linearGradient id="bg" x1="10" y1="8" x2="54" y2="56" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#0f55de"/>
+      <stop offset="1" stop-color="#1c3f75"/>
+    </linearGradient>
+    <linearGradient id="face" x1="18" y1="16" x2="46" y2="48" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#f8fbff"/>
+      <stop offset="1" stop-color="#dbe7f7"/>
+    </linearGradient>
+  </defs>
+  <rect x="4" y="4" width="56" height="56" rx="16" fill="url(#bg)"/>
+  <path d="M20 17h24l7 9v12l-7 9H20l-7-9V26l7-9Z" fill="url(#face)" stroke="#0b1a33" stroke-width="2.2"/>
+  <path d="M25 24h14l4 5v4l-4 5H25l-4-5v-4l4-5Z" fill="#0f55de" opacity="0.18"/>
+  <rect x="24" y="28" width="6" height="4" rx="2" fill="#0f55de"/>
+  <rect x="34" y="28" width="6" height="4" rx="2" fill="#0f55de"/>
+  <path d="M28 38h8" stroke="#1c3f75" stroke-width="2.4" stroke-linecap="round"/>
+  <path d="M24 15l8-5 8 5" stroke="#dbe7f7" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+  <circle cx="22" cy="21" r="1.4" fill="#facc15"/>
+  <circle cx="42" cy="21" r="1.4" fill="#facc15"/>
+</svg>

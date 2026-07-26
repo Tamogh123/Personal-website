@@ -12,7 +12,7 @@ const projects = [
     description:
       "Production ML platform to register, train, tune, evaluate, and deploy open-source, proprietary, and third-party models across multi-cloud. Backend in Rust with DDD, KServe for serving, KEDA for event-driven autoscaling. Delivers model inference-as-a-service with full lifecycle monitoring via Grafana & Prometheus.",
     tags: ["Rust", "KServe", "KEDA", "Azure", "Docker", "PostgreSQL", "MinIO"],
-    color: "var(--accent-blue)",
+    color: "var(--accent-cyan)",
     metrics: ["Multi-cloud", "Event-driven scale", "Full lifecycle"],
     year: "2025",
   },
@@ -21,7 +21,7 @@ const projects = [
     description:
       "Production-grade ETL pipelines for financial data forming the backbone of a trade library. Built a test server framework enabling rapid creation and validation of pipelines without manual environment setup. Integrated LLM-based capabilities into legacy data workflows.",
     tags: ["Python", "Spark", "Airflow", "Luigi", "LLM", "PostgreSQL"],
-    color: "var(--accent-purple)",
+    color: "var(--accent-blue)",
     metrics: ["Financial data", "Auto test framework", "LLM-augmented"],
     year: "2025",
   },
@@ -39,7 +39,7 @@ const projects = [
     description:
       "Hybrid architecture combining Graph Attention Networks and Transformers to predict chemical reaction outcomes. Built local + global molecular embeddings capturing both structural and relational properties. Achieved 74% prediction accuracy.",
     tags: ["PyTorch", "GAT", "Transformers", "GNNs", "RDKit"],
-    color: "var(--accent-green)",
+    color: "var(--accent-gold)",
     metrics: ["74% accuracy", "Hybrid GAT+TX", "May–Nov 2024"],
     year: "2024",
   },
@@ -111,13 +111,13 @@ export default function ProjectsSection() {
       id="projects"
       ref={sectionRef}
       className="relative py-40"
-      style={{ background: "var(--bg-primary)" }}
+      style={{ background: "#f5f7fb" }}
     >
       {/* Ambient glow */}
       <div
         className="absolute top-0 right-0 w-96 h-96 rounded-full pointer-events-none opacity-10"
         style={{
-          background: "radial-gradient(circle, var(--accent-purple), transparent 70%)",
+          background: "radial-gradient(circle, rgba(15,85,222,0.16), transparent 70%)",
           filter: "blur(60px)",
         }}
       />
@@ -126,15 +126,15 @@ export default function ProjectsSection() {
         <div ref={titleRef} className="mb-20">
           <p
             className="text-sm font-medium mb-3 tracking-widest uppercase"
-            style={{ color: "var(--accent-blue)", fontFamily: "var(--font-geist-mono)" }}
+            style={{ color: "var(--accent-blue)", fontFamily: "var(--font-mono)" }}
           >
             03. Projects
           </p>
           <h2 className="text-4xl md:text-5xl font-bold mb-5">
-            <span style={{ color: "var(--text-primary)" }}>Things I&apos;ve{" "}</span>
+            <span style={{ color: "#17263a" }}>Things I&apos;ve{" "}</span>
             <span className="gradient-text">Built</span>
           </h2>
-          <p style={{ color: "var(--text-secondary)" }} className="max-w-lg text-lg">
+          <p style={{ color: "#42556d" }} className="max-w-lg text-lg">
             Production ML systems, research prototypes, and everything in between.
           </p>
         </div>
@@ -143,9 +143,12 @@ export default function ProjectsSection() {
           {projects.map((project, i) => (
             <div
               key={i}
-              className="project-card glass rounded-2xl p-8 flex flex-col transition-all duration-200"
+              className="project-card glass rounded-2xl flex flex-col transition-all duration-200 mech-panel"
               style={{
                 border: `1px solid ${project.color}18`,
+                background: "#ffffff",
+                boxShadow: "0 10px 26px rgba(20,34,52,0.08)",
+                padding: "2.25rem 1.9rem 2.25rem 2.8rem",
                 transformStyle: "preserve-3d",
                 willChange: "transform",
               }}
@@ -180,13 +183,13 @@ export default function ProjectsSection() {
 
               <h3
                 className="text-xl font-bold mb-3"
-                style={{ color: "var(--text-primary)" }}
+                style={{ color: "#17263a" }}
               >
                 {project.title}
               </h3>
               <p
                 className="text-sm leading-loose mb-6 flex-1"
-                style={{ color: "var(--text-secondary)" }}
+                style={{ color: "#42556d" }}
               >
                 {project.description}
               </p>
@@ -215,8 +218,8 @@ export default function ProjectsSection() {
                     key={ti}
                     className="text-xs px-2 py-1 rounded"
                     style={{
-                      background: "rgba(255,255,255,0.04)",
-                      color: "var(--text-secondary)",
+                      background: "#eef3fb",
+                      color: "#4e6078",
                       fontFamily: "var(--font-geist-mono)",
                     }}
                   >

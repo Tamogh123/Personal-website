@@ -44,7 +44,7 @@ export default function AboutSection() {
       id="about"
       ref={sectionRef}
       className="relative py-40"
-      style={{ background: "var(--bg-primary)" }}
+      style={{ background: "#f5f7fb" }}
     >
       <div style={{ maxWidth: "1100px", margin: "0 auto", padding: "0 3rem" }}>
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
@@ -58,14 +58,14 @@ export default function AboutSection() {
 
             </p>
             <h2 className="text-4xl md:text-5xl font-bold mb-8">
-              <span style={{ color: "var(--text-primary)" }}>Building the{" "}</span>
+              <span style={{ color: "#17263a" }}>Building the{" "}</span>
               <span className="gradient-text">future</span>
               <br />
-              <span style={{ color: "var(--text-primary)" }}>one model at a time</span>
+              <span style={{ color: "#17263a" }}>one model at a time</span>
             </h2>
             <div
               className="space-y-6 text-base leading-relaxed"
-              style={{ color: "var(--text-secondary)" }}
+              style={{ color: "#42556d" }}
             >
               <p>
                               <br></br>
@@ -99,53 +99,108 @@ export default function AboutSection() {
           {/* Right */}
           <div className="about-right">
             {/* Animated terminal card */}
-            <div
-              className="glass rounded-2xl p-8 mb-8 neon-border"
-              style={{ fontFamily: "var(--font-geist-mono)" }}
-            >
-              <div className="flex items-center gap-2 mb-4">
-                <span className="w-3 h-3 rounded-full bg-red-500 opacity-70" />
-                <span className="w-3 h-3 rounded-full bg-yellow-500 opacity-70" />
-                <span className="w-3 h-3 rounded-full bg-green-500 opacity-70" />
+            <div className="terminal-3d-shell mb-10">
+              <div
+                className="glass rounded-2xl p-10 neon-border mech-panel terminal-3d-panel"
+                style={{
+                  fontFamily: "var(--font-geist-mono)",
+                  background: "#ffffff",
+                  border: "1px solid rgba(15,32,58,0.14)",
+                  boxShadow: "0 12px 30px rgba(20,34,52,0.1)",
+                  padding: "2.5rem 2.2rem 2.5rem 3.2rem",
+                }}
+              >
+              <div className="flex items-center gap-2 mb-10">
+                <span
+                  style={{
+                    width: 10,
+                    height: 10,
+                    display: "inline-block",
+                    borderRadius: 2,
+                    background: "#0f55de",
+                    boxShadow: "0 0 8px rgba(15, 85, 222, 0.28)",
+                  }}
+                />
+                <span
+                  style={{
+                    width: 11,
+                    height: 11,
+                    borderRadius: "50%",
+                    border: "2px solid #1c3f75",
+                    boxShadow: "inset 0 0 0 2px #ffffff",
+                    display: "inline-block",
+                  }}
+                />
+                <span
+                  style={{
+                    width: 8,
+                    height: 8,
+                    borderRadius: 2,
+                    background: "#1c4db3",
+                    display: "inline-block",
+                  }}
+                />
+                <span style={{ width: 12, height: 2, background: "#2a4f87", display: "inline-block" }} />
                 <span
                   className="ml-2 text-xs"
-                  style={{ color: "var(--text-secondary)" }}
+                  style={{ color: "#51627a" }}
                 >
                   tamogh@ml-workstation ~
                 </span>
+                <span style={{ flex: 1 }} />
+                <span
+                  style={{
+                    width: 12,
+                    height: 6,
+                    background: "#facc15",
+                    display: "inline-block",
+                    animation: "blink 1.1s step-end infinite",
+                  }}
+                />
+                <span
+                  style={{
+                    width: 12,
+                    height: 6,
+                    background: "#ef4444",
+                    display: "inline-block",
+                    animation: "blink 1.1s step-end infinite",
+                    animationDelay: "0.3s",
+                  }}
+                />
               </div>
-              <div className="space-y-2 text-sm">
-                <p style={{ color: "var(--accent-green)" }}>
-                  $ cargo run --release -- deploy --model gpt2-ft
-                </p>
-                <p style={{ color: "var(--text-secondary)" }}>
-                  Building Docker runtime from user deps... ✓
-                </p>
-                <p style={{ color: "var(--text-secondary)" }}>
-                  Pushing to Azure Container Registry... ✓
-                </p>
-                <p style={{ color: "var(--accent-blue)" }}>
-                  Deploying via KServe on AKS...
-                </p>
-                <p style={{ color: "var(--text-secondary)" }}>
-                  Health check: pod/gpt2-ft-0 Running ✓
-                </p>
-                <p style={{ color: "var(--text-secondary)" }}>
-                  KEDA autoscaler: minReplicas=1 maxReplicas=20
-                </p>
-                <p style={{ color: "var(--accent-green)" }}>
-                  Inference endpoint live → /v1/models/gpt2-ft ✓
-                </p>
-                <p style={{ color: "var(--accent-purple)" }}>
-                  Metrics streaming → Prometheus + Grafana
-                </p>
-                <p className="flex items-center gap-1">
-                  <span style={{ color: "var(--accent-green)" }}>$</span>
-                  <span
-                    className="w-2 h-4 cursor-blink"
-                    style={{ background: "var(--accent-blue)", display: "inline-block" }}
-                  />
-                </p>
+                <div className="space-y-3 text-sm" style={{ lineHeight: 1.6 }}>
+                  <p style={{ color: "#1c3f75" }}>
+                    $ cargo run --release -- deploy --model gpt2-ft
+                  </p>
+                  <p style={{ color: "#42556d" }}>
+                    Building Docker runtime from user deps... ✓
+                  </p>
+                  <p style={{ color: "#42556d" }}>
+                    Pushing to Azure Container Registry... ✓
+                  </p>
+                  <p style={{ color: "var(--accent-blue)" }}>
+                    Deploying via KServe on AKS...
+                  </p>
+                  <p style={{ color: "#42556d" }}>
+                    Health check: pod/gpt2-ft-0 Running ✓
+                  </p>
+                  <p style={{ color: "#42556d" }}>
+                    KEDA autoscaler: minReplicas=1 maxReplicas=20
+                  </p>
+                  <p style={{ color: "var(--accent-green)" }}>
+                    Inference endpoint live → /v1/models/gpt2-ft ✓
+                  </p>
+                  <p style={{ color: "var(--accent-purple)" }}>
+                    Metrics streaming → Prometheus + Grafana
+                  </p>
+                  <p className="flex items-center gap-1">
+                    <span style={{ color: "var(--accent-green)" }}>$</span>
+                    <span
+                      className="w-2 h-4 cursor-blink"
+                      style={{ background: "var(--accent-blue)", display: "inline-block" }}
+                    />
+                  </p>
+                </div>
               </div>
             </div>
             <br></br>
@@ -158,8 +213,12 @@ export default function AboutSection() {
               ].map((stat, i) => (
                 <div
                   key={i}
-                  className="stat-card glass rounded-xl p-6 text-center"
-                  style={{ border: `1px solid ${stat.color}20` }}
+                  className="stat-card rounded-xl p-8 text-center mech-panel"
+                  style={{
+                    border: `1px solid ${stat.color}20`,
+                    background: "#ffffff",
+                    boxShadow: "0 8px 24px rgba(20,34,52,0.08)",
+                  }}
                 >
                   <div
                     className="text-3xl font-black mb-1"
@@ -170,8 +229,8 @@ export default function AboutSection() {
                   <div
                     className="text-xs"
                     style={{
-                      color: "var(--text-secondary)",
-                      fontFamily: "var(--font-geist-mono)",
+                      color: "#51627a",
+                      fontFamily: "var(--font-mono)",
                     }}
                   >
                     {stat.label}

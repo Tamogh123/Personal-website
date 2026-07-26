@@ -14,7 +14,7 @@ const experiences = [
     description:
       "Building a unified ML platform to register, train, tune, evaluate, and deploy open-source, proprietary, and third-party models across multi-cloud environments. Architected backend systems using Domain-Driven Design in Rust. Developed a custom model deployment service generating Docker runtimes dynamically. Orchestrating production inference with KServe and KEDA. Monitoring via Grafana and Prometheus.",
     tags: ["Rust", "KServe", "KEDA", "Azure", "DDD", "MinIO", "Prometheus"],
-    color: "var(--accent-blue)",
+    color: "var(--accent-cyan)",
   },
   {
     role: "Software Developer Intern",
@@ -23,7 +23,7 @@ const experiences = [
     description:
       "Developed and optimized ETL pipelines for financial data, forming the backbone of a production-grade trade library. Modernized legacy systems by integrating LLM-based capabilities into data workflows. Built a test server framework for rapid creation and validation of ETL pipelines without manual setup.",
     tags: ["Python", "ETL", "Spark", "LLM", "Airflow", "PostgreSQL"],
-    color: "var(--accent-purple)",
+    color: "var(--accent-blue)",
   },
   {
     role: "Open Source Developer (GSoC 2024)",
@@ -32,7 +32,7 @@ const experiences = [
     description:
       "Integrated Bayesian inference methods — MCMC and Variational Inference — into Neuroptimus for neuronal parameter estimation under mentor Dr. Sbalocz Kali. Implemented global optimization techniques and custom loss functions for improved convergence and accuracy.",
     tags: ["Python", "MCMC", "Variational Inference", "Bayesian ML", "Neuroptimus"],
-    color: "var(--accent-green)",
+    color: "var(--accent-gold)",
   },
   {
     role: "Student Engineer Intern — ThaparSat",
@@ -87,18 +87,18 @@ export default function ExperienceSection() {
       id="experience"
       ref={sectionRef}
       className="relative py-40"
-      style={{ background: "var(--bg-secondary)" }}
+      style={{ background: "#f5f7fb" }}
     >
       <div style={{ maxWidth: "860px", margin: "0 auto", padding: "0 3rem" }}>
         <div ref={titleRef} className="mb-20">
           <p
             className="text-sm font-medium mb-3 tracking-widest uppercase"
-            style={{ color: "var(--accent-blue)", fontFamily: "var(--font-geist-mono)" }}
+            style={{ color: "var(--accent-blue)", fontFamily: "var(--font-mono)" }}
           >
             04. Experience
           </p>
           <h2 className="text-4xl md:text-5xl font-bold mb-4">
-            <span style={{ color: "var(--text-primary)" }}>Where I&apos;ve{" "}</span>
+            <span style={{ color: "#17263a" }}>Where I&apos;ve{" "}</span>
             <span className="gradient-text">Worked</span>
           </h2>
         </div>
@@ -125,7 +125,7 @@ export default function ExperienceSection() {
                     width: "32px",
                     height: "32px",
                     borderColor: exp.color,
-                    background: "var(--bg-secondary)",
+                    background: "#ffffff",
                     boxShadow: `0 0 15px ${exp.color}44`,
                   }}
                 >
@@ -137,14 +137,19 @@ export default function ExperienceSection() {
 
                 {/* Content */}
                 <div
-                  className="glass rounded-2xl p-8 flex-1"
-                  style={{ border: `1px solid ${exp.color}18` }}
+                  className="rounded-2xl flex-1 mech-panel"
+                  style={{
+                    border: `1px solid ${exp.color}18`,
+                    background: "#ffffff",
+                    boxShadow: "0 10px 26px rgba(20,34,52,0.08)",
+                    padding: "2.25rem 1.9rem 2.25rem 2.8rem",
+                  }}
                 >
                   <div className="flex flex-wrap items-start justify-between gap-3 mb-5">
                     <div>
                       <h3
                         className="text-lg font-bold"
-                        style={{ color: "var(--text-primary)" }}
+                        style={{ color: "#17263a" }}
                       >
                         {exp.role}
                       </h3>
@@ -171,7 +176,7 @@ export default function ExperienceSection() {
 
                   <p
                     className="text-sm leading-loose mb-6"
-                    style={{ color: "var(--text-secondary)" }}
+                    style={{ color: "#42556d" }}
                   >
                     {exp.description}
                   </p>
@@ -182,8 +187,8 @@ export default function ExperienceSection() {
                         key={ti}
                         className="text-xs px-2 py-1 rounded"
                         style={{
-                          background: "rgba(255,255,255,0.04)",
-                          color: "var(--text-secondary)",
+                          background: "#eef3fb",
+                          color: "#4e6078",
                           fontFamily: "var(--font-geist-mono)",
                         }}
                       >

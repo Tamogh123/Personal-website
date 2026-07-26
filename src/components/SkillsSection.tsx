@@ -9,7 +9,7 @@ gsap.registerPlugin(ScrollTrigger);
 const skills = [
   {
     category: "ML / AI",
-    color: "var(--accent-blue)",
+    color: "#facc15",
     items: [
       { name: "PyTorch", level: 93 },
       { name: "TensorFlow / Keras", level: 85 },
@@ -20,7 +20,7 @@ const skills = [
   },
   {
     category: "Systems & Backend",
-    color: "var(--accent-purple)",
+    color: "#dc2626",
     items: [
       { name: "Python", level: 95 },
       { name: "Rust", level: 80 },
@@ -31,7 +31,7 @@ const skills = [
   },
   {
     category: "Cloud & MLOps",
-    color: "var(--accent-green)",
+    color: "#2563eb",
     items: [
       { name: "Microsoft Azure", level: 85 },
       { name: "Docker / Kubernetes", level: 83 },
@@ -42,7 +42,7 @@ const skills = [
   },
   {
     category: "Arch. & Design",
-    color: "#f59e0b",
+    color: "#111827",
     items: [
       { name: "Domain-Driven Design", level: 85 },
       { name: "Microservices", level: 88 },
@@ -115,7 +115,7 @@ export default function SkillsSection() {
       id="skills"
       ref={sectionRef}
       className="relative py-40"
-      style={{ background: "var(--bg-secondary)" }}
+      style={{ background: "#f5f7fb" }}
     >
       {/* Grid background */}
       <div
@@ -133,18 +133,18 @@ export default function SkillsSection() {
         <div ref={titleRef} className="mb-20">
           <p
             className="text-sm font-medium mb-3 tracking-widest uppercase"
-            style={{ color: "var(--accent-blue)", fontFamily: "var(--font-geist-mono)" }}
+            style={{ color: "var(--accent-blue)", fontFamily: "var(--font-mono)" }}
           >
             02. Skills
           </p>
           <h2
             className="text-4xl md:text-5xl font-bold mb-5"
-            style={{ color: "var(--text-primary)" }}
+            style={{ color: "#17263a" }}
           >
             Technical{" "}
             <span className="gradient-text">Arsenal</span>
           </h2>
-          <p className="max-w-lg text-lg" style={{ color: "var(--text-secondary)" }}>
+          <p className="max-w-lg text-lg" style={{ color: "#42556d" }}>
             <br></br>
             From research to deployment — the full ML lifecycle.
           </p>
@@ -156,8 +156,13 @@ export default function SkillsSection() {
           {skills.map((group, gi) => (
             <div
               key={gi}
-              className="skill-card glass rounded-2xl p-8"
-              style={{ border: `1px solid ${group.color === "#f59e0b" ? "rgba(245,158,11,0.07)" : group.color + "22"}` }}
+              className="skill-card glass rounded-2xl mech-panel"
+              style={{
+                border: `1px solid ${group.color === "#f59e0b" ? "rgba(245,158,11,0.12)" : group.color + "22"}`,
+                background: "#ffffff",
+                boxShadow: "0 10px 26px rgba(20,34,52,0.08)",
+                padding: "2.25rem 2rem 2.25rem 2.9rem",
+              }}
             >
               <h3
                 className="text-lg font-bold mb-8"
@@ -172,7 +177,7 @@ export default function SkillsSection() {
                       <span
                         className="text-sm"
                         style={{
-                          color: "var(--text-primary)",
+                          color: "#1f3148",
                           fontFamily: "var(--font-geist-mono)",
                         }}
                       >
@@ -187,22 +192,14 @@ export default function SkillsSection() {
                     </div>
                     <div
                       className="h-1.5 rounded-full overflow-hidden"
-                      style={{ background: "rgba(255,255,255,0.06)" }}
+                      style={{ background: "#dce6f8" }}
                     >
                       <div
                         className="skill-bar-fill h-full rounded-full origin-left"
                         style={{
                           width: `${skill.level}%`,
-                          background: `linear-gradient(90deg, ${group.color}, ${
-                            gi === 0
-                              ? "var(--accent-purple)"
-                              : gi === 1
-                              ? "var(--accent-blue)"
-                              : gi === 2
-                              ? "var(--accent-blue)"
-                              : "#d97706"
-                          })`,
-                          boxShadow: `0 0 10px ${group.color}66`,
+                          background: group.color,
+                          boxShadow: `0 0 6px ${group.color}44`,
                         }}
                       />
                     </div>
@@ -217,7 +214,7 @@ export default function SkillsSection() {
         <div ref={tagsRef}>
           <p
             className="text-sm mb-8 tracking-widest uppercase font-medium"
-            style={{ color: "var(--text-secondary)", fontFamily: "var(--font-geist-mono)" }}
+            style={{ color: "#51627a", fontFamily: "var(--font-geist-mono)" }}
           >
             <br></br>
             Topics & Domains
@@ -226,11 +223,11 @@ export default function SkillsSection() {
             {tags.map((tag, i) => (
               <span
                 key={i}
-                className="skill-tag px-5 py-2.5 rounded-full text-sm font-medium cursor-default transition-all duration-300"
+                className="skill-tag px-5 py-3 rounded-full text-sm font-medium cursor-default transition-all duration-300"
                 style={{
                   background: "rgba(0,212,255,0.06)",
                   border: "1px solid rgba(0,212,255,0.15)",
-                  color: "var(--text-secondary)",
+                  color: "#42556d",
                   fontFamily: "var(--font-geist-mono)",
                 }}
                 onMouseEnter={(e) => {
@@ -243,7 +240,7 @@ export default function SkillsSection() {
                 onMouseLeave={(e) => {
                   const el = e.currentTarget as HTMLElement;
                   el.style.background = "rgba(0,212,255,0.06)";
-                  el.style.color = "var(--text-secondary)";
+                  el.style.color = "#42556d";
                   el.style.borderColor = "rgba(0,212,255,0.15)";
                   el.style.boxShadow = "none";
                 }}

@@ -11,7 +11,7 @@ function SectionDivider() {
   return (
     <div
       className="w-full"
-      style={{ height: "120px", background: "var(--bg-primary)" }}
+      style={{ height: "120px", background: "#f5f7fb" }}
     />
   );
 }

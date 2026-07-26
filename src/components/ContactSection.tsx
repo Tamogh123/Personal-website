@@ -37,13 +37,13 @@ export default function ContactSection() {
       id="contact"
       ref={sectionRef}
       className="relative py-32"
-      style={{ background: "var(--bg-primary)" }}
+      style={{ background: "#f5f7fb" }}
     >
       {/* Ambient */}
       <div
         className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[600px] h-[300px] pointer-events-none"
         style={{
-          background: "radial-gradient(ellipse, rgba(0,212,255,0.06) 0%, transparent 70%)",
+          background: "radial-gradient(ellipse, rgba(15,85,222,0.1) 0%, transparent 70%)",
           filter: "blur(40px)",
         }}
       />
@@ -52,28 +52,28 @@ export default function ContactSection() {
         <div ref={titleRef} className="mb-16 text-center">
           <p
             className="text-sm font-medium mb-2 tracking-widest uppercase"
-            style={{ color: "var(--accent-blue)", fontFamily: "var(--font-geist-mono)" }}
+            style={{ color: "var(--accent-blue)", fontFamily: "var(--font-mono)" }}
           >
             05. Contact
           </p>
           <h2 className="text-4xl md:text-5xl font-bold mb-4">
-            <span style={{ color: "var(--text-primary)" }}>Let&apos;s{" "}</span>
-            <span className="gradient-text">Collaborate</span>
+            <span style={{ color: "#17263a" }}>Let&apos;s{" "}</span>
+            <span style={{ color: "var(--accent-blue)" }}>Collaborate</span>
           </h2>
           <p
             className="max-w-lg mx-auto"
-            style={{ color: "var(--text-secondary)", textAlign: "center", marginBottom: "2.5rem" }}
+            style={{ color: "#42556d", textAlign: "center", marginBottom: "2.5rem" }}
           >
           </p>
         </div>
 
-        <div className="contact-left" style={{ maxWidth: "480px", margin: "0 auto", display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: "16px" }}>
+        <div className="contact-left" style={{ maxWidth: "760px", margin: "0 auto", display: "grid", gridTemplateColumns: "repeat(4, minmax(0, 1fr))", gap: "18px", padding: "0.25rem" }}>
             {[
               {
                 icon: "✉",
                 label: "Email",
                 href: "mailto:tamoghnekkanti@gmail.com",
-                color: "var(--accent-blue)",
+                color: "#111827",
               },
               {
                 icon: (
@@ -83,19 +83,19 @@ export default function ContactSection() {
                 ),
                 label: "GitHub",
                 href: "https://github.com/Tamogh123",
-                color: "var(--accent-purple)",
+                color: "#111827",
               },
               {
                 icon: "in",
                 label: "LinkedIn",
                 href: "https://linkedin.com/in/tamogh-nekkanti-253954225",
-                color: "var(--accent-green)",
+                color: "#111827",
               },
               {
                 icon: "☎",
                 label: "Phone",
                 href: "tel:+918790133749",
-                color: "var(--accent-blue)",
+                color: "#111827",
               },
             ].map((item, i) => (
               <a
@@ -104,33 +104,60 @@ export default function ContactSection() {
                 target={item.href.startsWith("http") ? "_blank" : undefined}
                 rel="noreferrer"
                 title={item.label}
-                className="glass rounded-xl transition-all duration-300"
+                className="rounded-xl transition-all duration-300 mech-panel"
                 style={{
                   border: `1px solid ${item.color}15`,
                   textDecoration: "none",
                   display: "flex",
+                  flexDirection: "column",
                   alignItems: "center",
                   justifyContent: "center",
+                  gap: "0.65rem",
                   width: "100%",
-                  aspectRatio: "1",
+                  minHeight: "138px",
                   fontSize: "1.4rem",
                   fontWeight: 700,
                   color: item.color,
-                  background: `${item.color}08`,
+                  background: "#ffffff",
+                  boxShadow: "0 8px 22px rgba(20,34,52,0.08)",
                 }}
                 onMouseEnter={(e) => {
                   (e.currentTarget as HTMLElement).style.borderColor = `${item.color}50`;
-                  (e.currentTarget as HTMLElement).style.background = `${item.color}18`;
+                  (e.currentTarget as HTMLElement).style.background = "#f4f8ff";
                   (e.currentTarget as HTMLElement).style.boxShadow = `0 0 20px ${item.color}30`;
                 }}
                 onMouseLeave={(e) => {
                   (e.currentTarget as HTMLElement).style.borderColor = `${item.color}15`;
-                  (e.currentTarget as HTMLElement).style.background = `${item.color}08`;
-                  (e.currentTarget as HTMLElement).style.boxShadow = "none";
+                  (e.currentTarget as HTMLElement).style.background = "#ffffff";
+                  (e.currentTarget as HTMLElement).style.boxShadow = "0 8px 22px rgba(20,34,52,0.08)";
                 }}
               >
-                <span style={{ display: "flex", alignItems: "center", justifyContent: "center" }}>
+                <span
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    width: "52px",
+                    height: "52px",
+                    borderRadius: "16px",
+                    background: `${item.color}10`,
+                    color: item.color,
+                    fontSize: item.label === "GitHub" ? "1.1rem" : "1.5rem",
+                    lineHeight: 1,
+                  }}
+                >
                   {item.icon}
+                </span>
+                <span
+                  style={{
+                    fontFamily: "var(--font-mono)",
+                    fontSize: "0.72rem",
+                    letterSpacing: "0.1em",
+                    textTransform: "uppercase",
+                    color: "#51627a",
+                  }}
+                >
+                  {item.label}
                 </span>
               </a>
             ))}
